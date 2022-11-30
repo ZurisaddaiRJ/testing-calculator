@@ -33,4 +33,27 @@
     cursor: pointer;
     color: green;
 }
+.multiplication-button {
+    cursor: pointer;
+    color: rgb(105, 43, 6);
+}
 
+.exponent-button {
+    cursor: pointer;
+    color: rgb(138, 18, 194);
+}
+
+.sqr-button {
+    cursor: pointer;
+    color: rgb(238, 14, 126);
+}
+
+.sqrt-button {
+    cursor: pointer;
+    color: rgb(104, 8, 8);
+}
+
+.division-button {
+    cursor: pointer;
+    color: rgb(37, 77, 5);
+}
