@@ -293,3 +293,102 @@ describe('Ui Multiplication - Component', () => {
     expect(el.innerText).toContain('45');   
   });
 });
+
+
+describe('Ui Exponent - Component', () => {
+  let component: UiComponent;
+  let fixture: ComponentFixture<UiComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UiComponent ],
+      imports: [FormsModule],
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UiComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('Should call Exponent method', () => {
+     // Arrange
+     let result = 0;
+     component.operator1 = 3;
+     component.operator2 = 5;
+ 
+     // Act
+     component.exp();
+     result = component.result;
+ 
+     // Assert
+     expect(result).toBe(243);
+  });
+
+
+
+  it('Should set operator1 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator1"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '5';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator1).toEqual(5);
+  });
+ 
+  it('Should set operator2 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator2"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '2.7';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator2).toEqual(2.7);
+  });
+
+
+  it('should elevate operator1 to operator2 when i click the exponent button ', () => {
+    // Arrange 
+    component.operator1 = 7.0;
+    component.operator2 = 3.0;
+    let exponentButton = fixture.debugElement.query(By.css('.exponent-button'));
+
+    // Act
+    exponentButton.triggerEventHandler('click', null);
+
+    // Assert
+    expect(component.result).toBe(343);
+
+   });
+
+  it('Should render exp in result div', () => {
+    // Arrange
+    component.operator1 = 9;
+    component.operator2 = 4;
+ 
+    // Act
+    component.exp();
+    fixture.detectChanges();
+    
+    let de = fixture.debugElement.query(By.css('.result'));
+    let el : HTMLElement = de.nativeElement;
+
+    // Assert
+    expect(el.innerText).toContain('6561');
+     
+  });
+
+});
