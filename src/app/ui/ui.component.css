@@ -33,4 +33,7 @@
     cursor: pointer;
     color: green;
 }
-
+.multiplication-button {
+    cursor: pointer;
+    color: rgb(105, 43, 6);
+}

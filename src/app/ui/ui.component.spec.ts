@@ -197,3 +197,99 @@ describe('Ui substraction-component', () => {
 
   });
 });
+
+describe('Ui Multiplication - Component', () => {
+  let component: UiComponent;
+  let fixture: ComponentFixture<UiComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UiComponent ],
+      imports: [FormsModule],
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UiComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('Should call Multiplication method', () => {
+     // Arrange
+     let result = 0;
+     component.operator1 = 7;
+     component.operator2 = 5;
+ 
+     // Act
+     component.multiplication();
+     result = component.result;
+ 
+     // Assert
+     expect(result).toBe(35);
+  });
+
+
+
+  it('Should set operator1 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator1"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '9.1483';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator1).toEqual(9.1483);
+  });
+ 
+  it('Should set operator2 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator2"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '5.33';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator2).toEqual(5.33);
+  });
+
+
+  it('should Multiply operator1 and operator2 when i click the multiplicacion button ', () => {
+    // Arrange 
+    component.operator1 = 7.0;
+    component.operator2 = 2.5;
+    let multiplicationButton = fixture.debugElement.query(By.css('.multiplication-button'));
+
+    // Act
+    multiplicationButton.triggerEventHandler('click', null);
+
+    // Assert
+    expect(component.result).toBe(17.5);
+
+   });
+
+  it('Should render mult in result div', () => {
+    // Arrange
+    component.operator1 = 9;
+    component.operator2 = 5;
+ 
+    // Act
+    component.multiplication();
+    fixture.detectChanges();
+    
+    let de = fixture.debugElement.query(By.css('.result'));
+    let el : HTMLElement = de.nativeElement;
+
+    // Assert
+    expect(el.innerText).toContain('45');   
+  });
+});
