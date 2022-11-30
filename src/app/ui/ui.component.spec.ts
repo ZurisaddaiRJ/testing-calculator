@@ -387,7 +387,84 @@ describe('Ui Exponent - Component', () => {
     let el : HTMLElement = de.nativeElement;
 
     // Assert
-    expect(el.innerText).toContain('6561');
+    expect(el.innerText).toContain('6561');   
+  });
+});
+
+describe('Ui Square - Component', () => {
+  let component: UiComponent;
+  let fixture: ComponentFixture<UiComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UiComponent ],
+      imports: [FormsModule],
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UiComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('Should call Square method', () => {
+     // Arrange
+     let result = 0;
+     component.operator1 = 7;
+ 
+     // Act
+     component.sqr();
+     result = component.result;
+ 
+     // Assert
+     expect(result).toBe(49);
+  });
+
+
+
+  it('Should set operator1 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator1"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '5';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator1).toEqual(5);
+  });
+
+  it('should square operator1 when i click the square button ', () => {
+    // Arrange 
+    component.operator1 = 6.0;
+    let squareButton = fixture.debugElement.query(By.css('.sqr-button'));
+
+    // Act
+    squareButton.triggerEventHandler('click', null);
+
+    // Assert
+    expect(component.result).toBe(36);
+
+   });
+
+  it('Should render square in result div', () => {
+    // Arrange
+    component.operator1 = 10;
+ 
+    // Act
+    component.sqr();
+    fixture.detectChanges();
+    
+    let de = fixture.debugElement.query(By.css('.result'));
+    let el : HTMLElement = de.nativeElement;
+
+    // Assert
+    expect(el.innerText).toContain('100');
      
   });
 

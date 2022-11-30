@@ -3,6 +3,7 @@ import { addition } from "../addition/addition";
 import { multiplication } from '../multiplication/multiplication';
 import { substraction } from '../substraction/substraction';
 import { exp } from '../exp/exp';
+import { sqr } from '../sqr/sqr';
 
 @Component({
   selector: 'app-ui',
@@ -41,6 +42,12 @@ export class UiComponent implements OnInit {
   exp() {
     let myresult = 0;
     myresult = exp(this.operator1, this.operator2);
+    this.result = myresult;
+  }
+
+  sqr() {
+    let myresult = 0;
+    myresult = sqr(this.operator1);
     this.result = myresult;
   }
 
