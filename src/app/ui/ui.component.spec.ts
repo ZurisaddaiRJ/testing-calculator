@@ -469,3 +469,80 @@ describe('Ui Square - Component', () => {
   });
 
 });
+
+describe('Ui Square Root - Component', () => {
+  let component: UiComponent;
+  let fixture: ComponentFixture<UiComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UiComponent ],
+      imports: [FormsModule],
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UiComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('Should call Square Root method', () => {
+     // Arrange
+     let result = 0;
+     component.operator1 = 9;
+ 
+     // Act
+     component.sqrt();
+     result = component.result;
+ 
+     // Assert
+     expect(result).toBe(3);
+  });
+
+  it('Should set operator1 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator1"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '7';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator1).toEqual(7);
+  });
+
+  it('should square root operator1 when i click the square root button ', () => {
+    // Arrange 
+    component.operator1 = 12.0;
+    let squareRootButton = fixture.debugElement.query(By.css('.sqrt-button'));
+
+    // Act
+    squareRootButton.triggerEventHandler('click', null);
+
+    // Assert
+    expect(component.result).toBe(3.4641016151377544);
+
+   });
+
+  it('Should render square root in result div', () => {
+    // Arrange
+    component.operator1 = 10;
+ 
+    // Act
+    component.sqrt();
+    fixture.detectChanges();
+    
+    let de = fixture.debugElement.query(By.css('.result'));
+    let el : HTMLElement = de.nativeElement;
+
+    // Assert
+    expect(el.innerText).toContain('3.16227766');
+     
+  });
+
+});
